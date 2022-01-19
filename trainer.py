@@ -72,7 +72,7 @@ class Trainer:
             optimizer.zero_grad()
         
             predict = self.model(inputs)
-            loss = criterion(predict, targets)
+            loss = criterion(predict, targets) #self.criterion(predict, targets) #
             loss.backward()
             optimizer.step()
 

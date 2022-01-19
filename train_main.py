@@ -31,7 +31,7 @@ def parse_args():
     parser.add_argument('--optimizer', '-o', default='Adam', type=str,
                         help='Optimization Algorithm')
     parser.add_argument('--dataset', '-d',
-                        default='fakes_dataset', type=str,
+                        default='synthetic_dataset', type=str,
                         help='Dataset: fakes_dataset or synthetic_dataset.')
 
     return parser.parse_args()

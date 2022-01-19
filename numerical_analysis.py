@@ -25,10 +25,10 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description='Analyze network performance.')
     parser.add_argument('--model', '-m',
-                        default='XceptionBased', type=str,
+                        default='XceptionBased', type=str,#default='XceptionBased', type=str,
                         help='Model name: SimpleNet or XceptionBased.')
     parser.add_argument('--checkpoint_path', '-cpp',
-                        default='checkpoints/XceptionBased.pt', type=str,
+                        default='checkpoints/fakes_dataset_SimpleNet_Adam.pt', type=str,#default='checkpoints/XceptionBased.pt', type=str,
                         help='Path to model checkpoint.')
     parser.add_argument('--dataset', '-d',
                         default='fakes_dataset', type=str,
@@ -58,7 +58,40 @@ def get_soft_scores_and_true_labels(dataset, model):
         gt_labels: an iterable holding the samples' ground truth labels.
     """
     """INSERT YOUR CODE HERE, overrun return."""
-    return torch.rand(100, ), torch.rand(100, ), torch.randint(0, 2, (100, ))
+
+    dataloader = DataLoader(dataset,
+                                batch_size=128,
+                                shuffle=False)
+    all_first_soft_scores= []
+    all_second_soft_scores= []
+    gt_labels=[]
+    for batch_idx, (inputs, targets) in enumerate(dataloader):
+
+           
+            #taken from  https://github.com/mjpyeon/pytorch-dicom-classification/blob/master/eval.py
+            outputs = model(inputs)
+            _, preds = torch.max(outputs, 1)
+            probs = torch.nn.functional.softmax(outputs, dim=1)
+            print(probs.size())
+            #print(probs[:,0])
+            #all_first_soft_scores.append(probs[:,0])
+            all_first_soft_scores.append(outputs[:,0])
+            #all_second_soft_scores.append(probs[:,1])
+            all_second_soft_scores.append(outputs[:,1])
+            gt_labels.append(targets)
+
+            fpr, tpr, threshold = metrics.roc_curve(targets, preds)
+            roc_auc = metrics.auc(fpr, tpr)
+
+            '''
+            loss = model.criterion(predict, targets) #self.criterion(predict, targets) #
+            loss.backward()
+            model.optimizer.step()
+            '''
+    new_all_first_soft_scores = [item.item() for items in all_first_soft_scores for item in items] 
+    new_all_second_soft_scores = [item.item() for items in all_second_soft_scores for item in items] 
+    new_gt_labels = [item.item() for items in gt_labels for item in items]  
+    return (new_all_first_soft_scores, new_all_second_soft_scores, new_gt_labels)
 
 
 def plot_roc_curve(roc_curve_figure,
