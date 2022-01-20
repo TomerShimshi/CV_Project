@@ -28,10 +28,10 @@ def parse_args():
                         default='XceptionBased', type=str,#default='XceptionBased', type=str,
                         help='Model name: SimpleNet or XceptionBased.')
     parser.add_argument('--checkpoint_path', '-cpp',
-                        default='checkpoints/fakes_dataset_SimpleNet_Adam.pt', type=str,#default='checkpoints/XceptionBased.pt', type=str,
+                        default='checkpoints/synthetic_dataset_XceptionBased_Adam.pt', type=str,#default='checkpoints/XceptionBased.pt', type=str,
                         help='Path to model checkpoint.')
     parser.add_argument('--dataset', '-d',
-                        default='fakes_dataset', type=str,
+                        default='synthetic_dataset', type=str,
                         help='Dataset: fakes_dataset or synthetic_dataset.')
 
     return parser.parse_args()
@@ -68,20 +68,19 @@ def get_soft_scores_and_true_labels(dataset, model):
     for batch_idx, (inputs, targets) in enumerate(dataloader):
 
            
-            #taken from  https://github.com/mjpyeon/pytorch-dicom-classification/blob/master/eval.py
+            
             outputs = model(inputs)
-            _, preds = torch.max(outputs, 1)
+           
             probs = torch.nn.functional.softmax(outputs, dim=1)
             print(probs.size())
-            #print(probs[:,0])
-            #all_first_soft_scores.append(probs[:,0])
+           
             all_first_soft_scores.append(outputs[:,0])
-            #all_second_soft_scores.append(probs[:,1])
+            
             all_second_soft_scores.append(outputs[:,1])
             gt_labels.append(targets)
 
-            fpr, tpr, threshold = metrics.roc_curve(targets, preds)
-            roc_auc = metrics.auc(fpr, tpr)
+            
+            
 
             '''
             loss = model.criterion(predict, targets) #self.criterion(predict, targets) #

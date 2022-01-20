@@ -8,6 +8,7 @@ Achieves the following performance on the validation set:
 Loss:0.9173 Prec@1:78.892 Prec@5:94.292
 """
 # pylint: skip-file
+from email import utils
 import math
 import torch.nn as nn
 import torch.nn.functional as F
@@ -208,7 +209,7 @@ def build_xception_backbone(pretrained=False, **kwargs):
     """
     Construct Xception.
     """
-
+    
     model = Xception(**kwargs)
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['xception']))

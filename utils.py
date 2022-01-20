@@ -51,7 +51,7 @@ def load_dataset(dataset_name: str, dataset_part: str) -> \
     return dataset
 
 
-def load_model(model_name: str) -> nn.Module:
+def load_model(model_name: str): #-> nn.Module:
     """Load the model corresponding to the name given.
 
     Args:
@@ -64,7 +64,7 @@ def load_model(model_name: str) -> nn.Module:
         'SimpleNet': SimpleNet(),
         'XceptionBased': get_xception_based_model(),
     }
-
+    print("loaoding the moddl")
     if model_name not in models:
         raise ValueError(f"Invalid Model name {model_name}")
 

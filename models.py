@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from torch import nn
 
 from xcpetion import build_xception_backbone
-
+import utils
 
 class SimpleNet(nn.Module):
     """Simple Convolutional and Fully Connect network."""
@@ -42,4 +42,22 @@ def get_xception_based_model() -> nn.Module:
     classification head stated in the exercise.
     """
     """INSERT YOUR CODE HERE, overrun return."""
-    return SimpleNet()
+
+    model= build_xception_backbone(True)
+    temp = (model.fc)
+    
+        
+    model.fc= nn.Sequential(nn.Linear(2048,1000),
+    nn.ReLU(),
+    nn.Linear(1000,256),
+    nn.ReLU(),
+    nn.Linear(256,64),
+    nn.ReLU(),
+    nn.Linear(64,2))
+    for name,param in model.named_parameters():
+        if 'fc' not in name:
+          param.requires_grad = False
+    print(model)
+    print(utils.get_nof_params(model))
+
+    return model #SimpleNet()

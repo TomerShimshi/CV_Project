@@ -17,10 +17,10 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description='Analyze network performance.')
     parser.add_argument('--model', '-m',
-                        default='SimpleNet', type=str,#default='XceptionBased', type=str,
+                        default='XceptionBased', type=str,#default='XceptionBased', type=str,
                         help='Model name: SimpleNet or XceptionBased.')
     parser.add_argument('--train_details_json', '-j',
-                       default='out/synthetic_dataset_SimpleNet_Adam.json', type=str, #default='out/XceptionBased_Adam.json', type=str,
+                       default='out/synthetic_dataset_XceptionBased_Adam.json', type=str, #default='out/XceptionBased_Adam.json', type=str,
                         help='Json containing loss and accuracy.')
     parser.add_argument('--dataset', '-d',
                         default='synthetic_dataset', type=str,
