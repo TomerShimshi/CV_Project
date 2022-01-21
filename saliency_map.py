@@ -25,10 +25,10 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description='Plot saliency maps.')
     parser.add_argument('--model', '-m',
-                        default='XceptionBased', type=str,
+                        default='SimpleNet', type=str,
                         help='Model name: SimpleNet or XceptionBased.')
     parser.add_argument('--checkpoint_path', '-cpp',
-                        default='checkpoints/XceptionBased.pt', type=str,
+                        default='checkpoints/fakes_dataset_SimpleNet_Adam.pt', type=str,
                         help='Path to model checkpoint.')
     parser.add_argument('--dataset', '-d',
                         default='fakes_dataset', type=str,
@@ -62,7 +62,43 @@ def compute_gradient_saliency_maps(samples: torch.tensor,
         shape Bx256x256 where B is the number of images in samples.
     """
     """INSERT YOUR CODE HERE, overrun return."""
-    return torch.rand(6, 256, 256)
+    samples.requires_grad_()
+    output = model(samples)
+    print(output)
+    #taken from https://towardsdatascience.com/saliency-map-using-pytorch-68270fe45e80
+    # Catch the output
+    print(output.size())
+    output = (output.gather(1,true_labels.view(-1,1).to(torch.int64)).squeeze())
+    output.backward(torch.FloatTensor([1.0]*output.shape[0]))
+    images_grads = samples.grad.abs()
+    saliency, _ = images_grads.max(dim=1)
+
+    
+    #abs_images_grads = images_grads.abs()
+    
+
+    '''
+    output_idx = torch.argmax(output,1)#output.argmax(1)
+    print(output[:,output_idx].size())
+    output_max =torch.gather(output[:,output_idx],1, (output_idx)).squeeze() #output[0,output_idx]
+
+    # Do backpropagation to get the derivative of the output based on the image
+    output_max.backward()
+
+    
+    max_vals= torch.argmax(outputs,1) 
+    temp2 = true_labels.view(-1, 1)
+    #labels_scores  = temp #torch.gather(temp,1, torch.size(true_labels)).squeeze()
+    max_vals.backward()
+    saliency = 0
+    
+    images_grads = outputs.grad.data
+    abs_images_grads = images_grads.abs()
+    saliency, _ = abs_images_grads.max(dim=1)
+    '''
+
+
+    return saliency #torch.rand(6, 256, 256)
 
 
 def main():  # pylint: disable=R0914, R0915

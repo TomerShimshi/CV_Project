@@ -71,9 +71,6 @@ def get_soft_scores_and_true_labels(dataset, model):
             
             outputs = model(inputs)
            
-            probs = torch.nn.functional.softmax(outputs, dim=1)
-            print(probs.size())
-           
             all_first_soft_scores.append(outputs[:,0])
             
             all_second_soft_scores.append(outputs[:,1])

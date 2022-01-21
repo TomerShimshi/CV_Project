@@ -57,7 +57,6 @@ def get_xception_based_model() -> nn.Module:
     for name,param in model.named_parameters():
         if 'fc' not in name:
           param.requires_grad = False
-    print(model)
     print(utils.get_nof_params(model))
 
     return model #SimpleNet()
