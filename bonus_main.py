@@ -5,7 +5,7 @@ from bonus_model import my_bonus_model
 from utils import load_dataset, get_nof_params
 
 
-def main() -> tuple[float, int]:
+def main() :#-> tuple[float, int]:
     """Load model and test dataset, evaluate model on dataset and report the
     number of model parameters.
 

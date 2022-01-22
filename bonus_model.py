@@ -11,5 +11,8 @@ def my_bonus_model():
     # initialize your model:
     model = SimpleNet()
     # load your model using exactly this line (don't change it):
+
+    # Save checkpoint
+    
     model.load_state_dict(torch.load('checkpoints/bonus_model.pt')['model'])
     return model
