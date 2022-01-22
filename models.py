@@ -44,9 +44,7 @@ def get_xception_based_model() -> nn.Module:
     """INSERT YOUR CODE HERE, overrun return."""
 
     model= build_xception_backbone(True)
-    temp = (model.fc)
     
-        
     model.fc= nn.Sequential(nn.Linear(2048,1000),
     nn.ReLU(),
     nn.Linear(1000,256),
@@ -54,9 +52,11 @@ def get_xception_based_model() -> nn.Module:
     nn.Linear(256,64),
     nn.ReLU(),
     nn.Linear(64,2))
+    '''
     for name,param in model.named_parameters():
         if 'fc' not in name:
           param.requires_grad = False
     print(utils.get_nof_params(model))
+    '''
 
     return model #SimpleNet()

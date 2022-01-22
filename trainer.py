@@ -66,9 +66,12 @@ class Trainer:
                                       shuffle=True)
         print_every = int(len(train_dataloader) / 10)
 
+        #self.model.to(device)
+
         for batch_idx, (inputs, targets) in enumerate(train_dataloader):
             """INSERT YOUR CODE HERE."""
             nof_samples +=len(targets)
+            #inputs, targets = inputs.to(device), targets.to(device)
             optimizer.zero_grad()
         
             predict = self.model(inputs)
