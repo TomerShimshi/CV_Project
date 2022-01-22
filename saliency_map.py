@@ -25,13 +25,13 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description='Plot saliency maps.')
     parser.add_argument('--model', '-m',
-                        default='SimpleNet', type=str,
+                        default='XceptionBased', type=str,
                         help='Model name: SimpleNet or XceptionBased.')
     parser.add_argument('--checkpoint_path', '-cpp',
-                        default='checkpoints/fakes_dataset_SimpleNet_Adam.pt', type=str,
+                        default='checkpoints/synthetic_dataset_XceptionBased_Adam.pt', type=str,
                         help='Path to model checkpoint.')
     parser.add_argument('--dataset', '-d',
-                        default='fakes_dataset', type=str,
+                        default='synthetic_dataset', type=str,
                         help='Dataset: fakes_dataset or synthetic_dataset.')
 
     return parser.parse_args()

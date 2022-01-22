@@ -60,33 +60,35 @@ def get_soft_scores_and_true_labels(dataset, model):
     """INSERT YOUR CODE HERE, overrun return."""
 
     dataloader = DataLoader(dataset,
-                                batch_size=128,
+                                batch_size=22,
                                 shuffle=False)
     all_first_soft_scores= []
     all_second_soft_scores= []
     gt_labels=[]
-    for batch_idx, (inputs, targets) in enumerate(dataloader):
+    model.eval()
+    with torch.no_grad():
+        for batch_idx, (inputs, targets) in enumerate(dataloader):
 
-           
-            
-            outputs = model(inputs)
-           
-            all_first_soft_scores.append(outputs[:,0])
-            
-            all_second_soft_scores.append(outputs[:,1])
-            gt_labels.append(targets)
 
-            
-            
 
-            '''
-            loss = model.criterion(predict, targets) #self.criterion(predict, targets) #
-            loss.backward()
-            model.optimizer.step()
-            '''
-    new_all_first_soft_scores = [item.item() for items in all_first_soft_scores for item in items] 
-    new_all_second_soft_scores = [item.item() for items in all_second_soft_scores for item in items] 
-    new_gt_labels = [item.item() for items in gt_labels for item in items]  
+                outputs = model(inputs)
+
+                all_first_soft_scores.append(outputs[:,0])
+
+                all_second_soft_scores.append(outputs[:,1])
+                gt_labels.append(targets)
+
+
+
+
+                '''
+                loss = model.criterion(predict, targets) #self.criterion(predict, targets) #
+                loss.backward()
+                model.optimizer.step()
+                '''
+        new_all_first_soft_scores = [item.item() for items in all_first_soft_scores for item in items] 
+        new_all_second_soft_scores = [item.item() for items in all_second_soft_scores for item in items] 
+        new_gt_labels = [item.item() for items in gt_labels for item in items]  
     return (new_all_first_soft_scores, new_all_second_soft_scores, new_gt_labels)
 
 
