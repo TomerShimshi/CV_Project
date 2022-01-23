@@ -118,9 +118,10 @@ class Trainer:
         
         # specify loss function 
         criterion = self.criterion
-        
+        self.model.to(device)
         for batch_idx, (inputs, targets) in enumerate(dataloader):
             """INSERT YOUR CODE HERE."""
+            inputs, targets = inputs.to(device), targets.to(device)
             predict = self.model(inputs)
             loss = criterion(predict, targets)
 

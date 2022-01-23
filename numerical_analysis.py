@@ -68,8 +68,8 @@ def get_soft_scores_and_true_labels(dataset, model):
     model.eval()
     with torch.no_grad():
         for batch_idx, (inputs, targets) in enumerate(dataloader):
-
-
+                model=model.to(device)
+                inputs, targets = inputs.to(device), targets.to(device)
 
                 outputs = model(inputs)
 

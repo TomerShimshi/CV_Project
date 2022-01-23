@@ -16,6 +16,7 @@ def main() :#-> tuple[float, int]:
     test_dataset = load_dataset('fakes_dataset', 'test')
 
     model = my_bonus_model()
+    print(model)
     trainer = Trainer(model=model, optimizer=None,
                       criterion=nn.CrossEntropyLoss(), batch_size=16,
                       train_dataset=test_dataset,

@@ -66,7 +66,7 @@ def get_grad_cam_visualization(test_dataset: torch.utils.data.Dataset,
     # Note: input_tensor can be a batch tensor with several images!
     
     # Construct the CAM object once, and then re-use it on many images:
-    cam = GradCAM(model, target_layers=target_layers, use_cuda=False)#torch.cuda.is_available())
+    cam = GradCAM(model, target_layers=target_layers, use_cuda=torch.cuda.is_available())#torch.cuda.is_available())
     
     # You can also use it within a with statement, to make sure it is freed,
     # In case you need to re-create it inside an outer loop:
@@ -80,6 +80,7 @@ def get_grad_cam_visualization(test_dataset: torch.utils.data.Dataset,
     # Here we use ClassifierOutputTarget, but you can define your own custom targets
     # That are, for example, combinations of categories, or specific outputs in a non standard model.
     inputs, targets = next(iter(input_tensor))
+    inputs, targets = inputs.to(device), targets.to(device)
     # for every image in the batch.
     #temp = model(inputs)
     print('shuff')
