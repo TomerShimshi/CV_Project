@@ -41,14 +41,6 @@ def main():
     """Parse arguments and train model on dataset."""
     args = parse_args()
 
-    ################ THIS IS JUST FOR TEST DELETE BEFOR SUBMITING ######################
-    #args.lr=0.01
-    #args.batch_size = 32
-
-
-
-
-    ################# FINISH TEST ##############################################
 
 
     # Data
