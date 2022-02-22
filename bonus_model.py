@@ -18,10 +18,8 @@ def my_bonus_model():
     #inception = models.inception_v3(pretrained=True)
     resnet= models.resnet18(pretrained=True)
     #print(resnet)
-    for param in resnet.parameters():
-         param.requires_grad = False
-    temp= torchvision.transforms.Resize((224,224))   
 
+    
     model= nn.Sequential( nn.Upsample((224,224), mode='nearest'),resnet,nn.BatchNorm1d(1000),
     nn.Linear(1000,512),
     nn.BatchNorm1d(512),
@@ -39,8 +37,8 @@ def my_bonus_model():
     # load your model using exactly this line (don't change it):
 
 
-
-################## Train The Model_need to delete later
+    
+    ################## Train The Model_need to delete later
     train_dataset = load_dataset('fakes_dataset', 'train')
     trainer = Trainer(model=model, optimizer=torch.optim.Adam(model.parameters(), lr=0.001),
                       criterion=nn.CrossEntropyLoss(), batch_size=32,
@@ -48,7 +46,7 @@ def my_bonus_model():
                       train_dataset=train_dataset,
                       validation_dataset=train_dataset,
                       test_dataset=train_dataset)
-    for i in range(10):
+    for i in range(3):
         trainer.train_one_epoch()
     checkpoint_filename= 'checkpoints/bonus_model.pt'
     # Save checkpoint
@@ -61,6 +59,6 @@ def my_bonus_model():
     torch.save(state, checkpoint_filename)
     
    
-
+    
     #model.load_state_dict(torch.load('checkpoints/bonus_model.pt')['model'])
     return model

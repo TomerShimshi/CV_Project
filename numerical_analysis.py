@@ -25,10 +25,10 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description='Analyze network performance.')
     parser.add_argument('--model', '-m',
-                        default='XceptionBased', type=str,#default='XceptionBased', type=str,
+                        default='SimpleNet', type=str,#default='XceptionBased', type=str,
                         help='Model name: SimpleNet or XceptionBased.')
     parser.add_argument('--checkpoint_path', '-cpp',
-                        default='checkpoints/synthetic_dataset_XceptionBased_Adam.pt', type=str,#default='checkpoints/XceptionBased.pt', type=str,
+                        default='checkpoints/synthetic_dataset_SimpleNet_Adam.pt', type=str,#default='checkpoints/XceptionBased.pt', type=str,
                         help='Path to model checkpoint.')
     parser.add_argument('--dataset', '-d',
                         default='synthetic_dataset', type=str,
